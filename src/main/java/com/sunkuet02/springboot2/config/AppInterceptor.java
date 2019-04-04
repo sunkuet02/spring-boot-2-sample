@@ -1,6 +1,7 @@
 package com.sunkuet02.springboot2.config;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AppInterceptor implements HandlerInterceptor {
 
-    private final static Logger logger = Logger.getLogger(AppInterceptor.class);
+    private final static Logger logger = LogManager.getLogger(AppInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
+        logger.info("Request from : " + httpServletRequest.getRemoteAddr() + " with uri: " + httpServletRequest.getRequestURI());
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.sunkuet02.springboot2.utils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Converter {
+public abstract class Converter {
 
-    private final static Logger logger = Logger.getLogger(Converter.class);
+    private final static Logger logger = LogManager.getLogger(Converter.class);
 
     private static ModelMapper modelMapper = new ModelMapper();
 

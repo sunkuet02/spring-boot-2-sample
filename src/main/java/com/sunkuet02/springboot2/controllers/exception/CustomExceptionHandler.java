@@ -1,8 +1,9 @@
 package com.sunkuet02.springboot2.controllers.exception;
 
 import com.sunkuet02.springboot2.dto.response.ApiResponse;
-import com.sunkuet02.springboot2.dto.response.Metadata;
-import org.apache.log4j.Logger;
+import com.sunkuet02.springboot2.dto.response.Errors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,15 +20,15 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final static Logger log = Logger.getLogger(CustomExceptionHandler.class);
+    private final static Logger log = LogManager.getFormatterLogger(CustomExceptionHandler.class);
 
     @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Object> handleControllerException(Exception ex, WebRequest req) {
         String errorMsg = ex.getMessage();
         ex.printStackTrace();
-        Metadata metadata = new Metadata(HttpStatus.BAD_REQUEST.value(), errorMsg);
+        Errors errors = new Errors(HttpStatus.BAD_REQUEST.value(), errorMsg);
 
-        return new ResponseEntity<>(new ApiResponse(metadata, null), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiResponse(errors, null), HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -41,8 +42,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
 
-        Metadata metadata = new Metadata(HttpStatus.BAD_REQUEST.value(), errorMsg);
-        return new ResponseEntity(new ApiResponse(metadata, null), HttpStatus.BAD_REQUEST);
+        Errors errors = new Errors(HttpStatus.BAD_REQUEST.value(), errorMsg);
+        return new ResponseEntity(new ApiResponse(errors, null), HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ex.printStackTrace();
         String errorMsg = ex.getMessage();
 
-        Metadata metadata = new Metadata(HttpStatus.NOT_ACCEPTABLE.value(), errorMsg);
-        return new ResponseEntity(new ApiResponse(metadata, null), HttpStatus.NOT_ACCEPTABLE);
+        Errors errors = new Errors(HttpStatus.NOT_ACCEPTABLE.value(), errorMsg);
+        return new ResponseEntity(new ApiResponse(errors, null), HttpStatus.NOT_ACCEPTABLE);
     }
 }

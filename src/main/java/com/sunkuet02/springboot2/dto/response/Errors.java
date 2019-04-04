@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Metadata {
+public class Errors {
     private Integer code;
 
     private String description;

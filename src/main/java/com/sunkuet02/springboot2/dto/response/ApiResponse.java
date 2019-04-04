@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ApiResponse <T> {
-    Metadata metadata;
+    Errors errors;
 
     T data;
 }
